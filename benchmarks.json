@@ -1,0 +1,46 @@
+{
+  "countries": {
+    "us": { "label": "United States", "cpiFactor": 1.2, "volumeFactor": 1.15, "roasOffset": 2 },
+    "gb": { "label": "United Kingdom", "cpiFactor": 1.05, "volumeFactor": 0.72, "roasOffset": 1 },
+    "de": { "label": "Germany", "cpiFactor": 0.98, "volumeFactor": 0.68, "roasOffset": 2 },
+    "fr": { "label": "France", "cpiFactor": 0.9, "volumeFactor": 0.7, "roasOffset": 0 },
+    "ca": { "label": "Canada", "cpiFactor": 1.02, "volumeFactor": 0.52, "roasOffset": 1 },
+    "au": { "label": "Australia", "cpiFactor": 1.08, "volumeFactor": 0.44, "roasOffset": 2 }
+  },
+  "platforms": {
+    "ios": { "label": "iOS", "cpiFactor": 1.16, "volumeFactor": 0.82, "roasOffset": 2 },
+    "android": { "label": "Android", "cpiFactor": 0.78, "volumeFactor": 1.28, "roasOffset": -1 }
+  },
+  "verticals": {
+    "casual-games": {
+      "label": "Casual Games", "cpi": [1.85, 2.65], "dailyVolume": [700, 1200], "d7Roas": [19, 27],
+      "model": "CPI", "modelCaption": "Optimize for quality installs",
+      "recommendation": "Start broad, then shift spend toward creatives and placements showing the strongest D1 payer signals."
+    },
+    "midcore-games": {
+      "label": "Midcore Games", "cpi": [3.3, 4.8], "dailyVolume": [350, 700], "d7Roas": [23, 34],
+      "model": "ROAS", "modelCaption": "Optimize toward payer value",
+      "recommendation": "Use early revenue signals and a diversified creative set to give value-based optimization enough room to learn."
+    },
+    "finance": {
+      "label": "Finance", "cpi": [3.7, 5.4], "dailyVolume": [260, 540], "d7Roas": [16, 24],
+      "model": "CPA", "modelCaption": "Optimize for funded accounts",
+      "recommendation": "Define a high-intent post-install event early; funded account or first deposit usually gives a clearer quality signal."
+    },
+    "shopping": {
+      "label": "Shopping & Rewards", "cpi": [2.1, 3.15], "dailyVolume": [600, 980], "d7Roas": [21, 31],
+      "model": "CPA", "modelCaption": "Optimize for first purchase",
+      "recommendation": "Pair purchase-event optimization with seasonal creative testing to unlock more efficient scale."
+    },
+    "sports": {
+      "label": "Sports & Betting", "cpi": [3.2, 4.7], "dailyVolume": [320, 670], "d7Roas": [24, 36],
+      "model": "CPA", "modelCaption": "Optimize for first deposit",
+      "recommendation": "Plan spend around high-interest events and optimize toward first deposit rather than registration alone."
+    },
+    "utility": {
+      "label": "Utility & Lifestyle", "cpi": [1.55, 2.4], "dailyVolume": [760, 1300], "d7Roas": [14, 22],
+      "model": "CPI", "modelCaption": "Optimize for activated users",
+      "recommendation": "Use activation or trial-start signals to separate engaged users from low-intent installs as quickly as possible."
+    }
+  }
+}

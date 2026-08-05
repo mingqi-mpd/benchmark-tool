@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore directional user acquisition benchmarks by market, platform, vertical, and budget."
+    />
+    <title>UA Benchmark Tool | Mapendo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-glow page-glow--one" aria-hidden="true"></div>
+    <div class="page-glow page-glow--two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="https://mapendo.co/" aria-label="Mapendo homepage">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>mapendo</span>
+      </a>
+      <a class="header-link" href="https://mapendo.co/contact">Talk to a UA expert <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow"><span></span> 2026 UA performance data</div>
+        <h1 id="page-title">Know what good<br /><em>looks like.</em></h1>
+        <p>
+          Get a fast, directional view of CPI, scale potential and D7 ROAS for your next mobile user
+          acquisition campaign.
+        </p>
+        <div class="trust-row" aria-label="Tool highlights">
+          <span>50+ supply partners</span>
+          <span>3B+ daily reach</span>
+          <span>Built from campaign patterns</span>
+        </div>
+      </section>
+
+      <section class="tool-shell" aria-label="UA benchmark calculator">
+        <form class="benchmark-form" id="benchmark-form">
+          <div class="form-heading">
+            <span class="step-label">01 / INPUTS</span>
+            <div>
+              <h2>Build your scenario</h2>
+              <p>Three details. One instant benchmark.</p>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Country <b aria-hidden="true">*</b></span>
+              <select id="country" name="country" required>
+                <option value="">Select a market</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Platform <b aria-hidden="true">*</b></span>
+              <select id="platform" name="platform" required>
+                <option value="">Select a platform</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Vertical <b aria-hidden="true">*</b></span>
+              <select id="vertical" name="vertical" required>
+                <option value="">Select a vertical</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Monthly budget <small>Optional</small></span>
+              <span class="money-input">
+                <span aria-hidden="true">$</span>
+                <input id="budget" name="budget" type="number" min="1000" step="1000" placeholder="50,000" />
+              </span>
+            </label>
+          </div>
+
+          <button class="primary-button" type="submit">
+            <span>Get benchmarks</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="form-note">No email required. Estimates are directional and based on mock MVP data.</p>
+        </form>
+
+        <div class="result-panel" id="result-panel" aria-live="polite">
+          <div class="result-empty" id="result-empty">
+            <div class="orbital" aria-hidden="true">
+              <span class="orbital-dot"></span>
+              <span class="orbital-core">M</span>
+            </div>
+            <p class="step-label">02 / BENCHMARK</p>
+            <h2>Your estimate<br />will appear here.</h2>
+            <p>Choose your campaign profile to reveal a tailored benchmark.</p>
+          </div>
+
+          <div class="result-content" id="result-content" hidden>
+            <div class="result-topline">
+              <div>
+                <span class="step-label">02 / YOUR BENCHMARK</span>
+                <h2 id="result-title">United States · iOS</h2>
+              </div>
+              <span class="confidence"><i></i> Strong signal</span>
+            </div>
+
+            <div class="kpi-grid">
+              <article class="kpi-card kpi-card--featured">
+                <span class="kpi-number">01</span>
+                <p>Expected CPI</p>
+                <strong id="cpi-value">$2.40–$3.10</strong>
+                <span class="kpi-caption">Cost per install</span>
+              </article>
+              <article class="kpi-card">
+                <span class="kpi-number">02</span>
+                <p>Daily volume</p>
+                <strong id="volume-value">540–820</strong>
+                <span class="kpi-caption" id="volume-caption">Estimated installs / day</span>
+              </article>
+              <article class="kpi-card">
+                <span class="kpi-number">03</span>
+                <p>Expected D7 ROAS</p>
+                <strong id="roas-value">24–32%</strong>
+                <span class="kpi-caption">Directional range</span>
+              </article>
+              <article class="kpi-card">
+                <span class="kpi-number">04</span>
+                <p>Recommended model</p>
+                <strong id="model-value">CPI</strong>
+                <span class="kpi-caption" id="model-caption">Optimize for quality installs</span>
+              </article>
+            </div>
+
+            <div class="recommendation">
+              <span aria-hidden="true">↗</span>
+              <p><b>Mapendo signal:</b> <span id="recommendation-copy"></span></p>
+            </div>
+
+            <button class="secondary-button" id="unlock-button" type="button">
+              <span><small>Want the complete picture?</small>Unlock advanced benchmarks</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="method-note">
+        <span>How to read this</span>
+        <p>
+          These ranges are designed for early planning, not forecasting. Actual performance varies with
+          creative quality, targeting, seasonality and optimization event.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand brand--footer" href="https://mapendo.co/">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>mapendo</span>
+      </a>
+      <p>Performance-based user acquisition, powered by A.I.</p>
+      <span>© 2026 Mapendo</span>
+    </footer>
+
+    <dialog class="lead-dialog" id="lead-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close">×</button>
+      <div class="dialog-accent" aria-hidden="true">M</div>
+      <span class="step-label">ADVANCED REPORT</span>
+      <h2 id="dialog-title">Go beyond the benchmark.</h2>
+      <p>Get channel mix guidance, country comparisons and benchmarks tailored to your app.</p>
+      <ul>
+        <li><span>✓</span> CPI and ROAS by market</li>
+        <li><span>✓</span> Recommended media mix</li>
+        <li><span>✓</span> Comparable campaign examples</li>
+      </ul>
+      <form id="lead-form">
+        <label class="field">
+          <span>Work email</span>
+          <input type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+        </label>
+        <button class="primary-button" type="submit"><span>Request the full report</span><span>→</span></button>
+        <p class="privacy-note">By submitting, you agree to be contacted by Mapendo about this request.</p>
+      </form>
+      <div class="success-message" id="success-message" hidden>
+        <span>✓</span>
+        <h3>Request captured</h3>
+        <p>This MVP is ready to connect to your CRM or form endpoint.</p>
+      </div>
+    </dialog>
+  </body>
+</html>
