@@ -27,4 +27,4 @@ The advanced benchmark form currently ends in a demo confirmation. Replace the s
 
 ## Edit benchmark data
 
-All mock benchmark inputs live in `benchmarks.json`. Countries and platforms apply multipliers to each vertical's baseline CPI, volume, and D7 ROAS ranges. Monthly budget, when supplied, is used to estimate daily install volume.
+All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model selection filters game verticals to the compatible IAA or IAP benchmarks; non-game verticals remain available for both. The current MVP includes one monthly budget option: $5,000.

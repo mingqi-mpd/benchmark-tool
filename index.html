@@ -23,8 +23,7 @@
 
     <header class="site-header">
       <a class="brand" href="https://mapendo.co/" aria-label="Mapendo homepage">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span>mapendo</span>
+        <img src="assets/mapendo-logo.png" alt="Mapendo" />
       </a>
       <a class="header-link" href="https://mapendo.co/contact">Talk to a UA expert <span aria-hidden="true">↗</span></a>
     </header>
@@ -50,7 +49,7 @@
             <span class="step-label">01 / INPUTS</span>
             <div>
               <h2>Build your scenario</h2>
-              <p>Three details. One instant benchmark.</p>
+              <p>Build a scenario from Mapendo's benchmark data.</p>
             </div>
           </div>
 
@@ -70,18 +69,24 @@
             </label>
 
             <label class="field">
-              <span>Vertical <b aria-hidden="true">*</b></span>
-              <select id="vertical" name="vertical" required>
-                <option value="">Select a vertical</option>
+              <span>Monetization model <b aria-hidden="true">*</b></span>
+              <select id="monetization" name="monetization" required>
+                <option value="">Select a model</option>
               </select>
             </label>
 
             <label class="field">
-              <span>Monthly budget <small>Optional</small></span>
-              <span class="money-input">
-                <span aria-hidden="true">$</span>
-                <input id="budget" name="budget" type="number" min="1000" step="1000" placeholder="50,000" />
-              </span>
+              <span>Vertical <b aria-hidden="true">*</b></span>
+              <select id="vertical" name="vertical" required disabled>
+                <option value="">Select a model first</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Monthly budget</span>
+              <select id="budget" name="budget">
+                <option value="5000">$5,000</option>
+              </select>
             </label>
           </div>
 
@@ -89,7 +94,7 @@
             <span>Get benchmarks</span>
             <span class="button-arrow" aria-hidden="true">→</span>
           </button>
-          <p class="form-note">No email required. Estimates are directional and based on mock MVP data.</p>
+          <p class="form-note">No email required. Benchmarks are directional and may vary by campaign conditions.</p>
         </form>
 
         <div class="result-panel" id="result-panel" aria-live="polite">
@@ -112,32 +117,7 @@
               <span class="confidence"><i></i> Strong signal</span>
             </div>
 
-            <div class="kpi-grid">
-              <article class="kpi-card kpi-card--featured">
-                <span class="kpi-number">01</span>
-                <p>Expected CPI</p>
-                <strong id="cpi-value">$2.40–$3.10</strong>
-                <span class="kpi-caption">Cost per install</span>
-              </article>
-              <article class="kpi-card">
-                <span class="kpi-number">02</span>
-                <p>Daily volume</p>
-                <strong id="volume-value">540–820</strong>
-                <span class="kpi-caption" id="volume-caption">Estimated installs / day</span>
-              </article>
-              <article class="kpi-card">
-                <span class="kpi-number">03</span>
-                <p>Expected D7 ROAS</p>
-                <strong id="roas-value">24–32%</strong>
-                <span class="kpi-caption">Directional range</span>
-              </article>
-              <article class="kpi-card">
-                <span class="kpi-number">04</span>
-                <p>Recommended model</p>
-                <strong id="model-value">CPI</strong>
-                <span class="kpi-caption" id="model-caption">Optimize for quality installs</span>
-              </article>
-            </div>
+            <div class="kpi-grid" id="kpi-grid"></div>
 
             <div class="recommendation">
               <span aria-hidden="true">↗</span>
@@ -163,8 +143,7 @@
 
     <footer>
       <a class="brand brand--footer" href="https://mapendo.co/">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span>mapendo</span>
+        <img src="assets/mapendo-logo.png" alt="Mapendo" />
       </a>
       <p>Performance-based user acquisition, powered by A.I.</p>
       <span>© 2026 Mapendo</span>

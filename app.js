@@ -2,24 +2,17 @@ const form = document.querySelector("#benchmark-form");
 const countrySelect = document.querySelector("#country");
 const platformSelect = document.querySelector("#platform");
 const verticalSelect = document.querySelector("#vertical");
-const budgetInput = document.querySelector("#budget");
+const monetizationSelect = document.querySelector("#monetization");
+const budgetSelect = document.querySelector("#budget");
 const resultEmpty = document.querySelector("#result-empty");
 const resultContent = document.querySelector("#result-content");
 const resultPanel = document.querySelector("#result-panel");
+const kpiGrid = document.querySelector("#kpi-grid");
 const dialog = document.querySelector("#lead-dialog");
 const leadForm = document.querySelector("#lead-form");
 const successMessage = document.querySelector("#success-message");
 
 let benchmarkData;
-
-const money = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
-});
-
-const integer = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 async function loadData() {
   try {
@@ -28,10 +21,10 @@ async function loadData() {
     benchmarkData = await response.json();
     populateSelect(countrySelect, benchmarkData.countries);
     populateSelect(platformSelect, benchmarkData.platforms);
-    populateSelect(verticalSelect, benchmarkData.verticals);
+    populateSelect(monetizationSelect, benchmarkData.monetizationModels);
   } catch (error) {
     form.querySelector("button").disabled = true;
-    document.querySelector(".form-note").textContent = "Start a local web server to load the benchmark data.";
+    document.querySelector(".form-note").textContent = "The benchmark data could not be loaded. Please refresh the page.";
   }
 }
 
@@ -44,62 +37,58 @@ function populateSelect(select, options) {
   });
 }
 
-function roundVolume(value) {
-  const interval = value >= 1000 ? 50 : 10;
-  return Math.max(interval, Math.round(value / interval) * interval);
+function updateVerticalOptions() {
+  const currentValue = verticalSelect.value;
+  const selectedModel = monetizationSelect.value;
+  verticalSelect.innerHTML = '<option value="">Select a vertical</option>';
+  if (!selectedModel || !benchmarkData) {
+    verticalSelect.disabled = true;
+    return;
+  }
+
+  const compatibleVerticals = Object.fromEntries(
+    Object.entries(benchmarkData.verticals).filter(([, vertical]) => vertical.models.includes(selectedModel))
+  );
+  populateSelect(verticalSelect, compatibleVerticals);
+  verticalSelect.disabled = false;
+  if (compatibleVerticals[currentValue]) verticalSelect.value = currentValue;
 }
 
-function calculateBenchmark(countryKey, platformKey, verticalKey, monthlyBudget) {
+function renderBenchmark(countryKey, platformKey, verticalKey, monetizationKey) {
   const country = benchmarkData.countries[countryKey];
   const platform = benchmarkData.platforms[platformKey];
   const vertical = benchmarkData.verticals[verticalKey];
-  const cpiFactor = country.cpiFactor * platform.cpiFactor;
-  const cpi = vertical.cpi.map((value) => value * cpiFactor);
+  const monetization = benchmarkData.monetizationModels[monetizationKey];
+  const budget = benchmarkData.budgets[budgetSelect.value];
 
-  let dailyVolume;
-  let usesBudget = false;
-  if (monthlyBudget >= 1000) {
-    const midpointCpi = (cpi[0] + cpi[1]) / 2;
-    const expected = monthlyBudget / 30 / midpointCpi;
-    dailyVolume = [roundVolume(expected * 0.82), roundVolume(expected * 1.18)];
-    usesBudget = true;
-  } else {
-    const volumeFactor = country.volumeFactor * platform.volumeFactor;
-    dailyVolume = vertical.dailyVolume.map((value) => roundVolume(value * volumeFactor));
-  }
+  document.querySelector("#result-title").textContent = `${vertical.label} · ${monetization.label}`;
+  kpiGrid.innerHTML = "";
 
-  const d7Roas = vertical.d7Roas.map((value) => value + country.roasOffset + platform.roasOffset);
-  return { country, platform, vertical, cpi, dailyVolume, d7Roas, usesBudget };
-}
+  vertical.metrics.forEach((metric, index) => {
+    const card = document.createElement("article");
+    card.className = `kpi-card${metric.highlight ? " kpi-card--featured" : ""}`;
+    card.innerHTML = `
+      <span class="kpi-number">${String(index + 1).padStart(2, "0")}</span>
+      <p>${metric.label}</p>
+      <strong>${metric.value}</strong>
+      <span class="kpi-caption">${metric.caption}</span>
+    `;
+    kpiGrid.append(card);
+  });
 
-function renderBenchmark(result) {
-  document.querySelector("#result-title").textContent = `${result.country.label} · ${result.platform.label} · ${result.vertical.label}`;
-  document.querySelector("#cpi-value").textContent = `${money.format(result.cpi[0])}–${money.format(result.cpi[1])}`;
-  document.querySelector("#volume-value").textContent = `${integer.format(result.dailyVolume[0])}–${integer.format(result.dailyVolume[1])}`;
-  document.querySelector("#volume-caption").textContent = result.usesBudget ? "Installs / day at your budget" : "Estimated installs / day";
-  document.querySelector("#roas-value").textContent = `${result.d7Roas[0]}–${result.d7Roas[1]}%`;
-  document.querySelector("#model-value").textContent = result.vertical.model;
-  document.querySelector("#model-caption").textContent = result.vertical.modelCaption;
-  document.querySelector("#recommendation-copy").textContent = result.vertical.recommendation;
-
+  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}, ${platform.label}, ${budget.label} monthly budget.`;
   resultEmpty.hidden = true;
   resultContent.hidden = false;
   resultContent.style.animation = "none";
-  requestAnimationFrame(() => {
-    resultContent.style.animation = "";
-  });
+  requestAnimationFrame(() => { resultContent.style.animation = ""; });
 }
+
+monetizationSelect.addEventListener("change", updateVerticalOptions);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!form.reportValidity() || !benchmarkData) return;
-  const result = calculateBenchmark(
-    countrySelect.value,
-    platformSelect.value,
-    verticalSelect.value,
-    Number(budgetInput.value)
-  );
-  renderBenchmark(result);
+  renderBenchmark(countrySelect.value, platformSelect.value, verticalSelect.value, monetizationSelect.value);
   if (window.innerWidth < 901) resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 

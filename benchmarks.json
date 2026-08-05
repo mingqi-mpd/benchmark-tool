@@ -1,46 +1,162 @@
 {
   "countries": {
-    "us": { "label": "United States", "cpiFactor": 1.2, "volumeFactor": 1.15, "roasOffset": 2 },
-    "gb": { "label": "United Kingdom", "cpiFactor": 1.05, "volumeFactor": 0.72, "roasOffset": 1 },
-    "de": { "label": "Germany", "cpiFactor": 0.98, "volumeFactor": 0.68, "roasOffset": 2 },
-    "fr": { "label": "France", "cpiFactor": 0.9, "volumeFactor": 0.7, "roasOffset": 0 },
-    "ca": { "label": "Canada", "cpiFactor": 1.02, "volumeFactor": 0.52, "roasOffset": 1 },
-    "au": { "label": "Australia", "cpiFactor": 1.08, "volumeFactor": 0.44, "roasOffset": 2 }
+    "us": { "label": "United States" },
+    "gb": { "label": "United Kingdom" },
+    "de": { "label": "Germany" },
+    "fr": { "label": "France" },
+    "ca": { "label": "Canada" },
+    "au": { "label": "Australia" }
   },
   "platforms": {
-    "ios": { "label": "iOS", "cpiFactor": 1.16, "volumeFactor": 0.82, "roasOffset": 2 },
-    "android": { "label": "Android", "cpiFactor": 0.78, "volumeFactor": 1.28, "roasOffset": -1 }
+    "ios": { "label": "iOS" },
+    "android": { "label": "Android" }
+  },
+  "monetizationModels": {
+    "iaa": { "label": "IAA" },
+    "iap": { "label": "IAP" }
+  },
+  "budgets": {
+    "5000": { "label": "$5,000" }
   },
   "verticals": {
-    "casual-games": {
-      "label": "Casual Games", "cpi": [1.85, 2.65], "dailyVolume": [700, 1200], "d7Roas": [19, 27],
-      "model": "CPI", "modelCaption": "Optimize for quality installs",
-      "recommendation": "Start broad, then shift spend toward creatives and placements showing the strongest D1 payer signals."
+    "lifestyle": {
+      "label": "Lifestyle",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
+        { "label": "Expected CPI", "value": "$3–5", "caption": "Cost per install" },
+        { "label": "Install → CPA", "value": ">70%", "caption": "Conversion rate" }
+      ],
+      "recommendation": "Prioritize the downstream CPA event: a healthy campaign should convert more than 70% of installs toward the defined CPA action."
     },
-    "midcore-games": {
-      "label": "Midcore Games", "cpi": [3.3, 4.8], "dailyVolume": [350, 700], "d7Roas": [23, 34],
-      "model": "ROAS", "modelCaption": "Optimize toward payer value",
-      "recommendation": "Use early revenue signals and a diversified creative set to give value-based optimization enough room to learn."
+    "music": {
+      "label": "Music",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Conversion rate" }
+      ],
+      "recommendation": "Use subscription starts as the primary quality signal and aim to keep install-to-subscription conversion above 40%."
     },
-    "finance": {
-      "label": "Finance", "cpi": [3.7, 5.4], "dailyVolume": [260, 540], "d7Roas": [16, 24],
-      "model": "CPA", "modelCaption": "Optimize for funded accounts",
-      "recommendation": "Define a high-intent post-install event early; funded account or first deposit usually gives a clearer quality signal."
+    "productivity": {
+      "label": "Productivity",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Conversion rate" }
+      ],
+      "recommendation": "Optimize toward subscription starts rather than installs alone; the benchmark quality threshold is above 40%."
     },
     "shopping": {
-      "label": "Shopping & Rewards", "cpi": [2.1, 3.15], "dailyVolume": [600, 980], "d7Roas": [21, 31],
-      "model": "CPA", "modelCaption": "Optimize for first purchase",
-      "recommendation": "Pair purchase-event optimization with seasonal creative testing to unlock more efficient scale."
+      "label": "Shopping / E-commerce",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "300+", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Purchase", "value": ">50%", "caption": "Conversion rate" }
+      ],
+      "recommendation": "Treat first purchase as the core optimization event and target an install-to-purchase rate above 50%."
     },
-    "sports": {
-      "label": "Sports & Betting", "cpi": [3.2, 4.7], "dailyVolume": [320, 670], "d7Roas": [24, 36],
-      "model": "CPA", "modelCaption": "Optimize for first deposit",
-      "recommendation": "Plan spend around high-interest events and optimize toward first deposit rather than registration alone."
+    "games-casual-puzzle": {
+      "label": "Games — Casual Puzzle",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "800–1,000", "caption": "Installs per day", "highlight": true },
+        { "label": "CPI · iOS US", "value": "$2–4", "caption": "Cost per install" },
+        { "label": "D1 ROAS", "value": ">5%", "caption": "Day-one return" },
+        { "label": "D7 ROAS", "value": "25–30%+", "caption": "Day-seven return" }
+      ],
+      "recommendation": "For iOS US, keep CPI within $2–4 while protecting early ROAS signals: above 5% on D1 and 25–30% or higher on D7."
+    },
+    "travel": {
+      "label": "Travel / Booking",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "200–300", "caption": "Installs per day", "highlight": true },
+        { "label": "Expected CPI", "value": "$3–6", "caption": "Cost per install" },
+        { "label": "Install → Search / Reg.", "value": ">40%", "caption": "Intent conversion" },
+        { "label": "Install → Booking", "value": "8–12%+", "caption": "Booking conversion" }
+      ],
+      "recommendation": "Balance scale with two quality gates: over 40% reaching search or registration and at least 8–12% completing a booking."
+    },
+    "games-action-strategy": {
+      "label": "Games — Action / Strategy",
+      "models": ["iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
+        { "label": "Expected CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "recommendation": "For this IAP-led model, allow a higher $4–6 CPI only when cohort quality supports D30 ROAS above 100%."
+    },
+    "games-idle": {
+      "label": "Games — Idle",
+      "models": ["iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "400–500", "caption": "Installs per day", "highlight": true },
+        { "label": "CPI · iOS US", "value": "<$4", "caption": "Cost per install" },
+        { "label": "D0 ROAS", "value": ">30%", "caption": "Day-zero return" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "recommendation": "For iOS US, keep CPI below $4 and use D0 ROAS above 30% as an early signal toward D30 payback above 100%."
+    },
+    "games-puzzle-iaa": {
+      "label": "Games — Puzzle",
+      "models": ["iaa"],
+      "metrics": [
+        { "label": "Daily installs", "value": "700–800", "caption": "Installs per day", "highlight": true },
+        { "label": "CPI · iOS US", "value": "$2–4", "caption": "Cost per install" },
+        { "label": "D1 ROAS", "value": ">5%", "caption": "Day-one return" },
+        { "label": "D7 ROAS", "value": ">30%", "caption": "Day-seven return" }
+      ],
+      "recommendation": "For this IAA-led model on iOS US, target $2–4 CPI while maintaining D1 ROAS above 5% and D7 ROAS above 30%."
+    },
+    "finance": {
+      "label": "Finance",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Registration", "value": ">70%", "caption": "Registration rate" },
+        { "label": "Reg. → Money Transfer", "value": "30–50%", "caption": "Funded-user conversion" }
+      ],
+      "recommendation": "Assess traffic quality beyond registration: more than 70% should register and 30–50% of registrants should transfer money."
+    },
+    "sports-betting": {
+      "label": "Sports / Betting",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day", "highlight": true },
+        { "label": "Expected CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "Install → FTD", "value": ">20%", "caption": "First-time deposit rate" }
+      ],
+      "recommendation": "Optimize toward first-time deposit quality, targeting more than 20% install-to-FTD while holding CPI within $4–6."
+    },
+    "rewards": {
+      "label": "Rewards App",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Registration", "value": "70%", "caption": "Registration rate" }
+      ],
+      "recommendation": "Use completed registration as the first quality checkpoint and target a 70% conversion rate from install."
     },
     "utility": {
-      "label": "Utility & Lifestyle", "cpi": [1.55, 2.4], "dailyVolume": [760, 1300], "d7Roas": [14, 22],
-      "model": "CPI", "modelCaption": "Optimize for activated users",
-      "recommendation": "Use activation or trial-start signals to separate engaged users from low-intent installs as quickly as possible."
+      "label": "Utility",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day", "highlight": true },
+        { "label": "Install → Trial Start", "value": "40%", "caption": "Trial-start rate" },
+        { "label": "Trial → Converted", "value": "20–25%", "caption": "Paid conversion rate" }
+      ],
+      "recommendation": "Track both stages of the trial funnel: 40% of installs starting a trial and 20–25% of trials converting."
+    },
+    "utility-vpn": {
+      "label": "Utility — VPN",
+      "models": ["iaa", "iap"],
+      "metrics": [
+        { "label": "Daily new users", "value": "100+", "caption": "New users per day", "highlight": true },
+        { "label": "D1 Retention", "value": ">30%", "caption": "Day-one retention" }
+      ],
+      "recommendation": "Prioritize retained users over raw volume and keep D1 retention above 30% as the main early quality signal."
     }
   }
 }
