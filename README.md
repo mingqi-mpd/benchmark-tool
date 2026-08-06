@@ -27,4 +27,4 @@ The advanced benchmark form currently ends in a demo confirmation. Replace the s
 
 ## Edit benchmark data
 
-All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model selection filters game verticals to the compatible IAA or IAP benchmarks; non-game verticals remain available for both. The current MVP includes one monthly budget option: $5,000.
+All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model field appears only for game verticals and shows their compatible IAA or IAP options. The current MVP includes one monthly budget option: $5,000.

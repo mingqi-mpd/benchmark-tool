@@ -7,10 +7,6 @@
     "ca": { "label": "Canada" },
     "au": { "label": "Australia" }
   },
-  "platforms": {
-    "ios": { "label": "iOS" },
-    "android": { "label": "Android" }
-  },
   "monetizationModels": {
     "iaa": { "label": "IAA" },
     "iap": { "label": "IAP" }

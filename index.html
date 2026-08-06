@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Explore directional user acquisition benchmarks by market, platform, vertical, and budget."
+      content="Get a directional view of acquisition costs, scale potential, and estimated ROAS with Mapendo."
     />
     <title>UA Benchmark Tool | Mapendo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,16 +30,16 @@
 
     <main>
       <section class="hero" aria-labelledby="page-title">
-        <div class="eyebrow"><span></span> 2026 UA performance data</div>
-        <h1 id="page-title">Know what good<br /><em>looks like.</em></h1>
+        <div class="eyebrow"><span></span> MOBILE UA BENCHMARK CALCULATOR</div>
+        <h1 id="page-title">See what performance<br />could look like <em>with Mapendo.</em></h1>
         <p>
-          Get a fast, directional view of CPI, scale potential and D7 ROAS for your next mobile user
-          acquisition campaign.
+          Get a fast, directional view of acquisition costs, scale potential, and estimated ROAS for
+          your next mobile user acquisition campaign.
         </p>
         <div class="trust-row" aria-label="Tool highlights">
-          <span>50+ supply partners</span>
-          <span>3B+ daily reach</span>
-          <span>Built from campaign patterns</span>
+          <span>Based on real campaign data</span>
+          <span>Refreshed every quarter</span>
+          <span>Segmented by market, platform, and vertical</span>
         </div>
       </section>
 
@@ -62,23 +62,9 @@
             </label>
 
             <label class="field">
-              <span>Platform <b aria-hidden="true">*</b></span>
-              <select id="platform" name="platform" required>
-                <option value="">Select a platform</option>
-              </select>
-            </label>
-
-            <label class="field">
-              <span>Monetization model <b aria-hidden="true">*</b></span>
-              <select id="monetization" name="monetization" required>
-                <option value="">Select a model</option>
-              </select>
-            </label>
-
-            <label class="field">
               <span>Vertical <b aria-hidden="true">*</b></span>
-              <select id="vertical" name="vertical" required disabled>
-                <option value="">Select a model first</option>
+              <select id="vertical" name="vertical" required>
+                <option value="">Select a vertical</option>
               </select>
             </label>
 
@@ -86,6 +72,13 @@
               <span>Monthly budget</span>
               <select id="budget" name="budget">
                 <option value="5000">$5,000</option>
+              </select>
+            </label>
+
+            <label class="field field--conditional" id="monetization-field" hidden>
+              <span>Monetization model <b aria-hidden="true">*</b></span>
+              <select id="monetization" name="monetization">
+                <option value="">Select a model</option>
               </select>
             </label>
           </div>
@@ -112,7 +105,7 @@
             <div class="result-topline">
               <div>
                 <span class="step-label">02 / YOUR BENCHMARK</span>
-                <h2 id="result-title">United States · iOS</h2>
+                <h2 id="result-title">United States · Lifestyle</h2>
               </div>
               <span class="confidence"><i></i> Strong signal</span>
             </div>
@@ -124,10 +117,19 @@
               <p><b>Mapendo signal:</b> <span id="recommendation-copy"></span></p>
             </div>
 
-            <button class="secondary-button" id="unlock-button" type="button">
-              <span><small>Want the complete picture?</small>Unlock advanced benchmarks</span>
-              <span aria-hidden="true">→</span>
-            </button>
+            <div class="inline-lead" id="inline-lead">
+              <p>Looking for more detail or don’t see your scenario? <b>Get your full report.</b></p>
+              <form class="inline-lead-form" id="lead-form">
+                <label class="sr-only" for="lead-email">Work email</label>
+                <input id="lead-email" type="email" name="email" placeholder="Enter your work email" autocomplete="email" required />
+                <button type="submit">Get the full report <span aria-hidden="true">→</span></button>
+              </form>
+              <p class="privacy-note">By submitting, you agree to be contacted by Mapendo about this request.</p>
+              <div class="success-message" id="success-message" hidden>
+                <span>✓</span>
+                <div><b>Request captured</b><small>This form is ready to connect to Mailchimp.</small></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -149,30 +151,5 @@
       <span>© 2026 Mapendo</span>
     </footer>
 
-    <dialog class="lead-dialog" id="lead-dialog" aria-labelledby="dialog-title">
-      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close">×</button>
-      <div class="dialog-accent" aria-hidden="true">M</div>
-      <span class="step-label">ADVANCED REPORT</span>
-      <h2 id="dialog-title">Go beyond the benchmark.</h2>
-      <p>Get channel mix guidance, country comparisons and benchmarks tailored to your app.</p>
-      <ul>
-        <li><span>✓</span> CPI and ROAS by market</li>
-        <li><span>✓</span> Recommended media mix</li>
-        <li><span>✓</span> Comparable campaign examples</li>
-      </ul>
-      <form id="lead-form">
-        <label class="field">
-          <span>Work email</span>
-          <input type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
-        </label>
-        <button class="primary-button" type="submit"><span>Request the full report</span><span>→</span></button>
-        <p class="privacy-note">By submitting, you agree to be contacted by Mapendo about this request.</p>
-      </form>
-      <div class="success-message" id="success-message" hidden>
-        <span>✓</span>
-        <h3>Request captured</h3>
-        <p>This MVP is ready to connect to your CRM or form endpoint.</p>
-      </div>
-    </dialog>
   </body>
 </html>

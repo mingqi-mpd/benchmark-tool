@@ -1,14 +1,13 @@
 const form = document.querySelector("#benchmark-form");
 const countrySelect = document.querySelector("#country");
-const platformSelect = document.querySelector("#platform");
 const verticalSelect = document.querySelector("#vertical");
 const monetizationSelect = document.querySelector("#monetization");
+const monetizationField = document.querySelector("#monetization-field");
 const budgetSelect = document.querySelector("#budget");
 const resultEmpty = document.querySelector("#result-empty");
 const resultContent = document.querySelector("#result-content");
 const resultPanel = document.querySelector("#result-panel");
 const kpiGrid = document.querySelector("#kpi-grid");
-const dialog = document.querySelector("#lead-dialog");
 const leadForm = document.querySelector("#lead-form");
 const successMessage = document.querySelector("#success-message");
 
@@ -20,8 +19,7 @@ async function loadData() {
     if (!response.ok) throw new Error("Benchmark data could not be loaded.");
     benchmarkData = await response.json();
     populateSelect(countrySelect, benchmarkData.countries);
-    populateSelect(platformSelect, benchmarkData.platforms);
-    populateSelect(monetizationSelect, benchmarkData.monetizationModels);
+    populateSelect(verticalSelect, benchmarkData.verticals);
   } catch (error) {
     form.querySelector("button").disabled = true;
     document.querySelector(".form-note").textContent = "The benchmark data could not be loaded. Please refresh the page.";
@@ -37,31 +35,34 @@ function populateSelect(select, options) {
   });
 }
 
-function updateVerticalOptions() {
-  const currentValue = verticalSelect.value;
-  const selectedModel = monetizationSelect.value;
-  verticalSelect.innerHTML = '<option value="">Select a vertical</option>';
-  if (!selectedModel || !benchmarkData) {
-    verticalSelect.disabled = true;
+function updateMonetizationField() {
+  const verticalKey = verticalSelect.value;
+  const isGame = verticalKey.startsWith("games-");
+  monetizationField.hidden = !isGame;
+  monetizationSelect.required = isGame;
+  monetizationSelect.innerHTML = '<option value="">Select a model</option>';
+
+  if (!isGame || !benchmarkData) {
+    monetizationSelect.value = "";
     return;
   }
 
-  const compatibleVerticals = Object.fromEntries(
-    Object.entries(benchmarkData.verticals).filter(([, vertical]) => vertical.models.includes(selectedModel))
+  const allowedModels = benchmarkData.verticals[verticalKey].models;
+  const options = Object.fromEntries(
+    Object.entries(benchmarkData.monetizationModels).filter(([key]) => allowedModels.includes(key))
   );
-  populateSelect(verticalSelect, compatibleVerticals);
-  verticalSelect.disabled = false;
-  if (compatibleVerticals[currentValue]) verticalSelect.value = currentValue;
+  populateSelect(monetizationSelect, options);
 }
 
-function renderBenchmark(countryKey, platformKey, verticalKey, monetizationKey) {
+function renderBenchmark(countryKey, verticalKey, monetizationKey) {
   const country = benchmarkData.countries[countryKey];
-  const platform = benchmarkData.platforms[platformKey];
   const vertical = benchmarkData.verticals[verticalKey];
-  const monetization = benchmarkData.monetizationModels[monetizationKey];
+  const monetization = monetizationKey ? benchmarkData.monetizationModels[monetizationKey] : null;
   const budget = benchmarkData.budgets[budgetSelect.value];
 
-  document.querySelector("#result-title").textContent = `${vertical.label} · ${monetization.label}`;
+  document.querySelector("#result-title").textContent = [country.label, vertical.label, monetization?.label]
+    .filter(Boolean)
+    .join(" · ");
   kpiGrid.innerHTML = "";
 
   vertical.metrics.forEach((metric, index) => {
@@ -76,32 +77,27 @@ function renderBenchmark(countryKey, platformKey, verticalKey, monetizationKey) 
     kpiGrid.append(card);
   });
 
-  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}, ${platform.label}, ${budget.label} monthly budget.`;
+  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}, ${budget.label} monthly budget.`;
   resultEmpty.hidden = true;
   resultContent.hidden = false;
   resultContent.style.animation = "none";
   requestAnimationFrame(() => { resultContent.style.animation = ""; });
 }
 
-monetizationSelect.addEventListener("change", updateVerticalOptions);
+verticalSelect.addEventListener("change", updateMonetizationField);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!form.reportValidity() || !benchmarkData) return;
-  renderBenchmark(countrySelect.value, platformSelect.value, verticalSelect.value, monetizationSelect.value);
+  renderBenchmark(countrySelect.value, verticalSelect.value, monetizationSelect.value);
   if (window.innerWidth < 901) resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
-document.querySelector("#unlock-button").addEventListener("click", () => dialog.showModal());
-document.querySelector("#dialog-close").addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (event) => {
-  if (event.target === dialog) dialog.close();
 });
 
 leadForm.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!leadForm.reportValidity()) return;
   leadForm.hidden = true;
+  document.querySelector(".inline-lead .privacy-note").hidden = true;
   successMessage.hidden = false;
 });
 
