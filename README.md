@@ -2,6 +2,8 @@
 
 A lightweight, responsive benchmark calculator built with plain HTML, CSS, JavaScript, and a JSON data file.
 
+The current visual system follows Mapendo's website: locally hosted CircularStd fonts, Mapendo blue and navy, pill-shaped calls to action, light cards, and an original transparent benchmark illustration in `assets/illustrations/`.
+
 ## Preview locally
 
 Because the tool loads its mock data from `benchmarks.json`, preview it through a local web server rather than opening `index.html` directly.
@@ -27,4 +29,4 @@ The advanced benchmark form currently ends in a demo confirmation. Replace the s
 
 ## Edit benchmark data
 
-All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model field appears only for game verticals and shows their compatible IAA or IAP options. The current MVP includes one monthly budget option: $5,000.
+All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model field appears only for game verticals and shows their compatible IAA or IAP options.

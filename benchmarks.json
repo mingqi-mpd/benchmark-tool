@@ -11,9 +11,6 @@
     "iaa": { "label": "IAA" },
     "iap": { "label": "IAP" }
   },
-  "budgets": {
-    "5000": { "label": "$5,000" }
-  },
   "verticals": {
     "lifestyle": {
       "label": "Lifestyle",

@@ -3,7 +3,6 @@ const countrySelect = document.querySelector("#country");
 const verticalSelect = document.querySelector("#vertical");
 const monetizationSelect = document.querySelector("#monetization");
 const monetizationField = document.querySelector("#monetization-field");
-const budgetSelect = document.querySelector("#budget");
 const resultEmpty = document.querySelector("#result-empty");
 const resultContent = document.querySelector("#result-content");
 const resultPanel = document.querySelector("#result-panel");
@@ -58,7 +57,6 @@ function renderBenchmark(countryKey, verticalKey, monetizationKey) {
   const country = benchmarkData.countries[countryKey];
   const vertical = benchmarkData.verticals[verticalKey];
   const monetization = monetizationKey ? benchmarkData.monetizationModels[monetizationKey] : null;
-  const budget = benchmarkData.budgets[budgetSelect.value];
 
   document.querySelector("#result-title").textContent = [country.label, vertical.label, monetization?.label]
     .filter(Boolean)
@@ -77,7 +75,7 @@ function renderBenchmark(countryKey, verticalKey, monetizationKey) {
     kpiGrid.append(card);
   });
 
-  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}, ${budget.label} monthly budget.`;
+  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}.`;
   resultEmpty.hidden = true;
   resultContent.hidden = false;
   resultContent.style.animation = "none";

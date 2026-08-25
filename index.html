@@ -8,12 +8,6 @@
       content="Get a directional view of acquisition costs, scale potential, and estimated ROAS with Mapendo."
     />
     <title>UA Benchmark Tool | Mapendo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
@@ -25,17 +19,28 @@
       <a class="brand" href="https://mapendo.co/" aria-label="Mapendo homepage">
         <img src="assets/mapendo-logo.png" alt="Mapendo" />
       </a>
-      <a class="header-link" href="https://mapendo.co/contact">Talk to a UA expert <span aria-hidden="true">↗</span></a>
+      <nav class="header-actions" aria-label="Page links">
+        <a class="header-link" href="https://mapendo.co/">Back to mapendo.co</a>
+        <a class="header-button" href="https://mapendo.co/contact">Get in touch</a>
+      </nav>
     </header>
 
     <main>
       <section class="hero" aria-labelledby="page-title">
-        <div class="eyebrow"><span></span> MOBILE UA BENCHMARK CALCULATOR</div>
-        <h1 id="page-title">See what performance<br />could look like <em>with Mapendo.</em></h1>
-        <p>
-          Get a fast, directional view of acquisition costs, scale potential, and estimated ROAS for
-          your next mobile user acquisition campaign.
-        </p>
+        <div class="hero-copy">
+          <div class="eyebrow">MOBILE UA BENCHMARK CALCULATOR</div>
+          <h1 id="page-title">See what performance could look like <em>with Mapendo.</em></h1>
+          <p>
+            Get a fast, directional view of acquisition costs, scale potential, and estimated ROAS for
+            your next mobile user acquisition campaign.
+          </p>
+          <a class="hero-cta" href="#benchmark-form">Explore your benchmark</a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <span class="decor-dot decor-dot--one"></span>
+          <span class="decor-dot decor-dot--two"></span>
+          <img src="assets/illustrations/ua-benchmark-hero.png" alt="" />
+        </div>
         <div class="trust-row" aria-label="Tool highlights">
           <span>Based on real campaign data</span>
           <span>Refreshed every quarter</span>
@@ -43,7 +48,13 @@
         </div>
       </section>
 
-      <section class="tool-shell" aria-label="UA benchmark calculator">
+      <section class="calculator-section" aria-labelledby="calculator-title">
+        <div class="section-intro">
+          <span>YOUR CAMPAIGN SCENARIO</span>
+          <h2 id="calculator-title">Find your performance range</h2>
+          <p>Select a few campaign details to see directional benchmarks from Mapendo.</p>
+        </div>
+        <div class="tool-shell" aria-label="UA benchmark calculator">
         <form class="benchmark-form" id="benchmark-form">
           <div class="form-heading">
             <span class="step-label">01 / INPUTS</span>
@@ -65,13 +76,6 @@
               <span>Vertical <b aria-hidden="true">*</b></span>
               <select id="vertical" name="vertical" required>
                 <option value="">Select a vertical</option>
-              </select>
-            </label>
-
-            <label class="field">
-              <span>Monthly budget</span>
-              <select id="budget" name="budget">
-                <option value="5000">$5,000</option>
               </select>
             </label>
 
@@ -132,6 +136,7 @@
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       <section class="method-note">
@@ -148,7 +153,11 @@
         <img src="assets/mapendo-logo.png" alt="Mapendo" />
       </a>
       <p>Performance-based user acquisition, powered by A.I.</p>
-      <span>© 2026 Mapendo</span>
+      <nav class="footer-links" aria-label="Legal links">
+        <a href="https://www.iubenda.com/privacy-policy/38879500">Privacy Policy</a>
+        <a href="https://www.iubenda.com/privacy-policy/38879500/cookie-policy">Cookie Policy</a>
+        <span>© 2026 Mapendo</span>
+      </nav>
     </footer>
 
   </body>
