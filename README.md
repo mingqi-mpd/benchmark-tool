@@ -6,7 +6,7 @@ The current visual system follows Mapendo's website: locally hosted CircularStd 
 
 ## Preview locally
 
-Because the tool loads its mock data from `benchmarks.json`, preview it through a local web server rather than opening `index.html` directly.
+Because the tool loads its data from `benchmarks.json`, preview it through a local web server rather than opening `index.html` directly.
 
 ```bash
 python3 -m http.server 8080
@@ -23,10 +23,10 @@ Then open `http://localhost:8080`.
 
 No build command or framework is required.
 
-## Connect the lead form
+## Lead form
 
-The advanced benchmark form currently ends in a demo confirmation. Replace the submit handler near the end of `app.js` with your CRM, marketing automation, or form endpoint before launching lead collection.
+The full-report form is connected to Mapendo's Mailchimp Audience. It requires a work email and explicit consent to receive the report and follow-up sales and marketing communications.
 
 ## Edit benchmark data
 
-All benchmark inputs live in `benchmarks.json`. Each vertical defines its own KPI cards and recommendation text. The monetization-model field appears only for game verticals and shows their compatible IAA or IAP options.
+All benchmark inputs live in `benchmarks.json`. Country and vertical options filter each other so unavailable combinations are never offered. Game verticals automatically display their fixed IAA or IAP monetization model, and results show only the metrics available for the selected combination.

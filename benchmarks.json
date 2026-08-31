@@ -1,155 +1,240 @@
 {
   "countries": {
     "us": { "label": "United States" },
-    "gb": { "label": "United Kingdom" },
-    "de": { "label": "Germany" },
-    "fr": { "label": "France" },
     "ca": { "label": "Canada" },
-    "au": { "label": "Australia" }
+    "fr": { "label": "France" },
+    "de": { "label": "Germany" },
+    "es": { "label": "Spain" },
+    "uk": { "label": "United Kingdom" },
+    "jp": { "label": "Japan" },
+    "kr": { "label": "South Korea" }
   },
   "monetizationModels": {
     "iaa": { "label": "IAA" },
     "iap": { "label": "IAP" }
   },
   "verticals": {
-    "lifestyle": {
-      "label": "Lifestyle",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
-        { "label": "Expected CPI", "value": "$3–5", "caption": "Cost per install" },
-        { "label": "Install → CPA", "value": ">70%", "caption": "Conversion rate" }
-      ],
-      "recommendation": "Prioritize the downstream CPA event: a healthy campaign should convert more than 70% of installs toward the defined CPA action."
-    },
-    "music": {
-      "label": "Music",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "100+", "caption": "Installs per day", "highlight": true },
-        { "label": "Install → Subscription", "value": ">40%", "caption": "Conversion rate" }
-      ],
-      "recommendation": "Use subscription starts as the primary quality signal and aim to keep install-to-subscription conversion above 40%."
-    },
-    "productivity": {
-      "label": "Productivity",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
-        { "label": "Install → Subscription", "value": ">40%", "caption": "Conversion rate" }
-      ],
-      "recommendation": "Optimize toward subscription starts rather than installs alone; the benchmark quality threshold is above 40%."
-    },
-    "shopping": {
-      "label": "Shopping / E-commerce",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "300+", "caption": "Installs per day", "highlight": true },
-        { "label": "Install → Purchase", "value": ">50%", "caption": "Conversion rate" }
-      ],
-      "recommendation": "Treat first purchase as the core optimization event and target an install-to-purchase rate above 50%."
-    },
-    "games-casual-puzzle": {
-      "label": "Games — Casual Puzzle",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "800–1,000", "caption": "Installs per day", "highlight": true },
-        { "label": "CPI · iOS US", "value": "$2–4", "caption": "Cost per install" },
-        { "label": "D1 ROAS", "value": ">5%", "caption": "Day-one return" },
-        { "label": "D7 ROAS", "value": "25–30%+", "caption": "Day-seven return" }
-      ],
-      "recommendation": "For iOS US, keep CPI within $2–4 while protecting early ROAS signals: above 5% on D1 and 25–30% or higher on D7."
-    },
-    "travel": {
-      "label": "Travel / Booking",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "200–300", "caption": "Installs per day", "highlight": true },
-        { "label": "Expected CPI", "value": "$3–6", "caption": "Cost per install" },
-        { "label": "Install → Search / Reg.", "value": ">40%", "caption": "Intent conversion" },
-        { "label": "Install → Booking", "value": "8–12%+", "caption": "Booking conversion" }
-      ],
-      "recommendation": "Balance scale with two quality gates: over 40% reaching search or registration and at least 8–12% completing a booking."
-    },
-    "games-action-strategy": {
-      "label": "Games — Action / Strategy",
-      "models": ["iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day", "highlight": true },
-        { "label": "Expected CPI", "value": "$4–6", "caption": "Cost per install" },
+    "game-action-strategy": { "label": "Game - Action/Strategy", "model": "iap" },
+    "game-idle": { "label": "Game - Idle", "model": "iap" },
+    "game-casual-puzzle": { "label": "Game - Casual Puzzle", "model": "iaa" },
+    "finance": { "label": "Finance" },
+    "sport-betting": { "label": "Sport/betting" },
+    "utility": { "label": "Utility" },
+    "lifestyle": { "label": "Lifestyle" },
+    "music-entertainment": { "label": "Music/Entertainment" },
+    "shopping-ecommerce": { "label": "Shopping/ E-commerce" },
+    "travel": { "label": "Travel" }
+  },
+  "benchmarks": {
+    "us": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "$4–6", "caption": "Cost per install" },
         { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
       ],
-      "recommendation": "For this IAP-led model, allow a higher $4–6 CPI only when cohort quality supports D30 ROAS above 100%."
-    },
-    "games-idle": {
-      "label": "Games — Idle",
-      "models": ["iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "400–500", "caption": "Installs per day", "highlight": true },
-        { "label": "CPI · iOS US", "value": "<$4", "caption": "Cost per install" },
-        { "label": "D0 ROAS", "value": ">30%", "caption": "Day-zero return" },
+      "game-idle": [
+        { "label": "Daily installs", "value": "400–500", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "<$4", "caption": "Cost per install" },
         { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
       ],
-      "recommendation": "For iOS US, keep CPI below $4 and use D0 ROAS above 30% as an early signal toward D30 payback above 100%."
-    },
-    "games-puzzle-iaa": {
-      "label": "Games — Puzzle",
-      "models": ["iaa"],
-      "metrics": [
-        { "label": "Daily installs", "value": "700–800", "caption": "Installs per day", "highlight": true },
-        { "label": "CPI · iOS US", "value": "$2–4", "caption": "Cost per install" },
+      "game-casual-puzzle": [
+        { "label": "Daily installs", "value": "700–800", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "$2–4", "caption": "Cost per install" },
         { "label": "D1 ROAS", "value": ">5%", "caption": "Day-one return" },
         { "label": "D7 ROAS", "value": ">30%", "caption": "Day-seven return" }
       ],
-      "recommendation": "For this IAA-led model on iOS US, target $2–4 CPI while maintaining D1 ROAS above 5% and D7 ROAS above 30%."
-    },
-    "finance": {
-      "label": "Finance",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "200+", "caption": "Installs per day", "highlight": true },
+      "finance": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day" },
         { "label": "Install → Registration", "value": ">70%", "caption": "Registration rate" },
-        { "label": "Reg. → Money Transfer", "value": "30–50%", "caption": "Funded-user conversion" }
+        { "label": "Registration → Money transfer", "value": "30–50%", "caption": "Transfer conversion rate" }
       ],
-      "recommendation": "Assess traffic quality beyond registration: more than 70% should register and 30–50% of registrants should transfer money."
-    },
-    "sports-betting": {
-      "label": "Sports / Betting",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "200+", "caption": "Installs per day", "highlight": true },
-        { "label": "Expected CPI", "value": "$4–6", "caption": "Cost per install" },
+      "sport-betting": [
+        { "label": "CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day" },
         { "label": "Install → FTD", "value": ">20%", "caption": "First-time deposit rate" }
       ],
-      "recommendation": "Optimize toward first-time deposit quality, targeting more than 20% install-to-FTD while holding CPI within $4–6."
-    },
-    "rewards": {
-      "label": "Rewards App",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "50+", "caption": "Installs per day", "highlight": true },
-        { "label": "Install → Registration", "value": "70%", "caption": "Registration rate" }
+      "utility": [
+        { "label": "Daily installs", "value": "50–100", "caption": "Installs per day" },
+        { "label": "Install → Trial started", "value": ">40%", "caption": "Trial-start rate" },
+        { "label": "Trial started → Converted", "value": "20–25%", "caption": "Trial conversion rate" }
       ],
-      "recommendation": "Use completed registration as the first quality checkpoint and target a 70% conversion rate from install."
-    },
-    "utility": {
-      "label": "Utility",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily installs", "value": "50+", "caption": "Installs per day", "highlight": true },
-        { "label": "Install → Trial Start", "value": "40%", "caption": "Trial-start rate" },
-        { "label": "Trial → Converted", "value": "20–25%", "caption": "Paid conversion rate" }
+      "lifestyle": [
+        { "label": "Daily installs", "value": "150–200", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$3–5", "caption": "Cost per install" },
+        { "label": "Install → CPA", "value": ">70%", "caption": "Conversion rate" }
       ],
-      "recommendation": "Track both stages of the trial funnel: 40% of installs starting a trial and 20–25% of trials converting."
-    },
-    "utility-vpn": {
-      "label": "Utility — VPN",
-      "models": ["iaa", "iap"],
-      "metrics": [
-        { "label": "Daily new users", "value": "100+", "caption": "New users per day", "highlight": true },
-        { "label": "D1 Retention", "value": ">30%", "caption": "Day-one retention" }
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Subscription rate" }
       ],
-      "recommendation": "Prioritize retained users over raw volume and keep D1 retention above 30% as the main early quality signal."
+      "shopping-ecommerce": [
+        { "label": "Daily installs", "value": "300+", "caption": "Installs per day" },
+        { "label": "Install → Purchase", "value": ">50%", "caption": "Purchase rate" }
+      ],
+      "travel": [
+        { "label": "Daily installs", "value": "200–300", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$3–6", "caption": "Cost per install" },
+        { "label": "Install → Booking", "value": ">8–12%", "caption": "Booking rate" }
+      ]
+    },
+    "ca": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "50–100", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "sport-betting": [
+        { "label": "eCPI", "value": "$10–15", "caption": "Effective cost per install" },
+        { "label": "Install → FTD", "value": ">40%", "caption": "First-time deposit rate" }
+      ],
+      "travel": [
+        { "label": "Daily installs", "value": ">100", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$4–6", "caption": "Cost per install" }
+      ]
+    },
+    "fr": {
+      "game-casual-puzzle": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "$1–3", "caption": "Cost per install" },
+        { "label": "D1 ROAS", "value": ">50%", "caption": "Day-one return" }
+      ],
+      "finance": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "Install → Registration", "value": ">60%", "caption": "Registration rate" },
+        { "label": "Install → Account open", "value": ">20%", "caption": "Account-open rate" }
+      ],
+      "sport-betting": [
+        { "label": "CPI", "value": "$3–5", "caption": "Cost per install" },
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → FTD", "value": ">40%", "caption": "First-time deposit rate" }
+      ],
+      "lifestyle": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">30%", "caption": "Subscription rate" }
+      ],
+      "shopping-ecommerce": [
+        { "label": "Daily installs", "value": "300+", "caption": "Installs per day" },
+        { "label": "Install → Purchase", "value": ">30%", "caption": "Purchase rate" }
+      ],
+      "travel": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" }
+      ]
+    },
+    "de": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "50–100", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$3–5", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "game-idle": [
+        { "label": "Daily installs", "value": "100", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "<$4", "caption": "Cost per install" }
+      ],
+      "game-casual-puzzle": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "$1–3", "caption": "Cost per install" },
+        { "label": "D1 ROAS", "value": ">50%", "caption": "Day-one return" }
+      ],
+      "finance": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "Install → Account creation", "value": ">70%", "caption": "Account-creation rate" }
+      ],
+      "sport-betting": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → FTD", "value": ">30%", "caption": "First-time deposit rate" }
+      ],
+      "lifestyle": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Subscription rate" }
+      ],
+      "shopping-ecommerce": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → First login", "value": ">30%", "caption": "First-login rate" }
+      ]
+    },
+    "es": {
+      "finance": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Account creation", "value": ">50%", "caption": "Account-creation rate" },
+        { "label": "Account creation → First payment", "value": ">70%", "caption": "First-payment rate" }
+      ],
+      "lifestyle": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Subscription rate" }
+      ],
+      "travel": [
+        { "label": "Daily installs", "value": "500+", "caption": "Installs per day" },
+        { "label": "Install → First ride", "value": ">40%", "caption": "First-ride rate" }
+      ]
+    },
+    "uk": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$3–5", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "game-casual-puzzle": [
+        { "label": "Daily installs", "value": "200+", "caption": "Installs per day" },
+        { "label": "CPI · iOS", "value": "$1–3", "caption": "Cost per install" },
+        { "label": "D1 ROAS", "value": ">40%", "caption": "Day-one return" }
+      ],
+      "finance": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Account creation", "value": ">30%", "caption": "Account-creation rate" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "100+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">40%", "caption": "Subscription rate" }
+      ],
+      "travel": [
+        { "label": "Daily installs", "value": ">100", "caption": "Installs per day" },
+        { "label": "Install → New active user", "value": ">30%", "caption": "New-active-user rate" }
+      ]
+    },
+    "jp": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "game-idle": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" },
+        { "label": "D14 ROAS", "value": ">50%", "caption": "Day-fourteen return" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">70%", "caption": "Subscription rate" }
+      ]
+    },
+    "kr": {
+      "game-action-strategy": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$4–6", "caption": "Cost per install" },
+        { "label": "D30 ROAS", "value": ">100%", "caption": "Day-thirty return" }
+      ],
+      "game-idle": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "CPI", "value": "$2–4", "caption": "Cost per install" },
+        { "label": "D14 ROAS", "value": ">50%", "caption": "Day-fourteen return" }
+      ],
+      "music-entertainment": [
+        { "label": "Daily installs", "value": "50+", "caption": "Installs per day" },
+        { "label": "Install → Subscription", "value": ">70%", "caption": "Subscription rate" }
+      ]
     }
   }
 }

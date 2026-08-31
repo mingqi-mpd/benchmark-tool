@@ -187,6 +187,7 @@ a { color: inherit; }
   background-repeat: no-repeat;
 }
 .field select:focus, .field input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(80,112,255,.12); }
+.field select:disabled { color: var(--navy); background-color: #f0f2fa; border-color: rgba(10, 8, 59, .1); cursor: not-allowed; opacity: 1; }
 
 .primary-button {
   display: flex;
@@ -245,12 +246,16 @@ a { color: inherit; }
 .inline-lead > p:first-child { margin: 0 0 12px; color: #d7d7e1; font-size: 13px; line-height: 1.45; }
 .inline-lead > p:first-child b { color: var(--white); }
 .inline-lead-form { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
-.inline-lead-form input { min-width: 0; height: 50px; padding: 0 15px; border: 1px solid transparent; border-radius: 50px; outline: none; color: var(--navy); background: var(--white); }
-.inline-lead-form input:focus { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255,97,160,.18); }
+.inline-lead-form > input[type="email"] { min-width: 0; height: 50px; padding: 0 15px; border: 1px solid transparent; border-radius: 50px; outline: none; color: var(--navy); background: var(--white); }
+.inline-lead-form > input[type="email"]:focus { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255,97,160,.18); }
 .mailchimp-trap { position: absolute; left: -5000px; }
+.subscription-consent { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 10px; margin: 3px 4px 5px; color: #c8c8d3; font-size: 11px; line-height: 1.5; cursor: pointer; }
+.subscription-consent input { flex: 0 0 auto; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--pink); cursor: pointer; }
+.subscription-consent a { color: var(--white); text-underline-offset: 2px; }
+.subscription-consent a:hover { color: var(--pink); }
+.subscription-consent:has(input:focus-visible) { outline: 2px solid var(--pink); outline-offset: 4px; border-radius: 4px; }
 .inline-lead-form button { min-height: 50px; padding: 0 20px; border: 0; border-radius: 50px; color: var(--white); background: var(--blue); font-family: "CircularStd"; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
 .inline-lead-form button:hover { background: var(--blue-hover); }
-.inline-lead .privacy-note { margin: 8px 4px 0; color: #a8a8b7; font-size: 10px; text-align: left; }
 .inline-lead .success-message { display: flex; align-items: center; gap: 10px; padding-top: 8px; }
 .inline-lead .success-message > span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--white); background: var(--pink); }
 .inline-lead .success-message div { display: grid; gap: 2px; }

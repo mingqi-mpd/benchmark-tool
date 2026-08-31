@@ -17,55 +17,105 @@ async function loadData() {
     const response = await fetch("benchmarks.json");
     if (!response.ok) throw new Error("Benchmark data could not be loaded.");
     benchmarkData = await response.json();
-    populateSelect(countrySelect, benchmarkData.countries);
-    populateSelect(verticalSelect, benchmarkData.verticals);
+    syncSelectOptions();
   } catch (error) {
     form.querySelector("button").disabled = true;
     document.querySelector(".form-note").textContent = "The benchmark data could not be loaded. Please refresh the page.";
   }
 }
 
-function populateSelect(select, options) {
-  Object.entries(options).forEach(([value, item]) => {
+function setSelectOptions(select, keys, items, placeholder, selectedValue = "") {
+  select.replaceChildren();
+
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.textContent = placeholder;
+  select.append(placeholderOption);
+
+  keys.forEach((key) => {
     const option = document.createElement("option");
-    option.value = value;
-    option.textContent = item.label;
+    option.value = key;
+    option.textContent = items[key].label;
     select.append(option);
   });
+
+  select.value = keys.includes(selectedValue) ? selectedValue : "";
+}
+
+function countriesForVertical(verticalKey) {
+  return Object.keys(benchmarkData.countries).filter((countryKey) => benchmarkData.benchmarks[countryKey]?.[verticalKey]);
+}
+
+function verticalsForCountry(countryKey) {
+  return Object.keys(benchmarkData.verticals).filter((verticalKey) => benchmarkData.benchmarks[countryKey]?.[verticalKey]);
+}
+
+function syncSelectOptions(changedField) {
+  let countryKey = countrySelect.value;
+  let verticalKey = verticalSelect.value;
+
+  if (changedField === "country" && countryKey && verticalKey && !benchmarkData.benchmarks[countryKey]?.[verticalKey]) {
+    verticalKey = "";
+  }
+
+  if (changedField === "vertical" && verticalKey && countryKey && !benchmarkData.benchmarks[countryKey]?.[verticalKey]) {
+    countryKey = "";
+  }
+
+  const countryKeys = verticalKey ? countriesForVertical(verticalKey) : Object.keys(benchmarkData.countries);
+  const verticalKeys = countryKey ? verticalsForCountry(countryKey) : Object.keys(benchmarkData.verticals);
+
+  setSelectOptions(countrySelect, countryKeys, benchmarkData.countries, "Select a market", countryKey);
+  setSelectOptions(verticalSelect, verticalKeys, benchmarkData.verticals, "Select a vertical", verticalKey);
+  updateMonetizationField();
 }
 
 function updateMonetizationField() {
-  const verticalKey = verticalSelect.value;
-  const isGame = verticalKey.startsWith("games-");
-  monetizationField.hidden = !isGame;
-  monetizationSelect.required = isGame;
-  monetizationSelect.innerHTML = '<option value="">Select a model</option>';
+  const vertical = benchmarkData?.verticals[verticalSelect.value];
+  const modelKey = vertical?.model;
 
-  if (!isGame || !benchmarkData) {
-    monetizationSelect.value = "";
+  monetizationField.hidden = !modelKey;
+  monetizationSelect.replaceChildren();
+
+  if (!modelKey) {
+    monetizationSelect.disabled = false;
+    monetizationSelect.removeAttribute("aria-disabled");
     return;
   }
 
-  const allowedModels = benchmarkData.verticals[verticalKey].models;
-  const options = Object.fromEntries(
-    Object.entries(benchmarkData.monetizationModels).filter(([key]) => allowedModels.includes(key))
-  );
-  populateSelect(monetizationSelect, options);
+  const option = document.createElement("option");
+  option.value = modelKey;
+  option.textContent = benchmarkData.monetizationModels[modelKey].label;
+  monetizationSelect.append(option);
+  monetizationSelect.value = modelKey;
+  monetizationSelect.disabled = true;
+  monetizationSelect.setAttribute("aria-disabled", "true");
 }
 
-function renderBenchmark(countryKey, verticalKey, monetizationKey) {
+function resetResult() {
+  resultContent.hidden = true;
+  resultEmpty.hidden = false;
+}
+
+function renderBenchmark(countryKey, verticalKey) {
   const country = benchmarkData.countries[countryKey];
   const vertical = benchmarkData.verticals[verticalKey];
-  const monetization = monetizationKey ? benchmarkData.monetizationModels[monetizationKey] : null;
+  const metrics = benchmarkData.benchmarks[countryKey]?.[verticalKey];
 
+  if (!country || !vertical || !metrics) {
+    resetResult();
+    return;
+  }
+
+  const monetization = vertical.model ? benchmarkData.monetizationModels[vertical.model] : null;
   document.querySelector("#result-title").textContent = [country.label, vertical.label, monetization?.label]
     .filter(Boolean)
     .join(" · ");
   kpiGrid.innerHTML = "";
 
-  vertical.metrics.forEach((metric, index) => {
+  metrics.forEach((metric, index) => {
     const card = document.createElement("article");
-    card.className = `kpi-card${metric.highlight ? " kpi-card--featured" : ""}`;
+    card.className = `kpi-card${index === 0 ? " kpi-card--featured" : ""}`;
     card.innerHTML = `
       <span class="kpi-number">${String(index + 1).padStart(2, "0")}</span>
       <p>${metric.label}</p>
@@ -75,19 +125,27 @@ function renderBenchmark(countryKey, verticalKey, monetizationKey) {
     kpiGrid.append(card);
   });
 
-  document.querySelector("#recommendation-copy").textContent = `${vertical.recommendation} Scenario: ${country.label}.`;
+  document.querySelector("#recommendation-copy").textContent = `Available directional benchmark for ${vertical.label} campaigns in ${country.label}.`;
   resultEmpty.hidden = true;
   resultContent.hidden = false;
   resultContent.style.animation = "none";
   requestAnimationFrame(() => { resultContent.style.animation = ""; });
 }
 
-verticalSelect.addEventListener("change", updateMonetizationField);
+countrySelect.addEventListener("change", () => {
+  syncSelectOptions("country");
+  resetResult();
+});
+
+verticalSelect.addEventListener("change", () => {
+  syncSelectOptions("vertical");
+  resetResult();
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!form.reportValidity() || !benchmarkData) return;
-  renderBenchmark(countrySelect.value, verticalSelect.value, monetizationSelect.value);
+  renderBenchmark(countrySelect.value, verticalSelect.value);
   if (window.innerWidth < 901) resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
@@ -95,7 +153,6 @@ leadForm.addEventListener("submit", () => {
   if (!leadForm.reportValidity()) return;
   window.setTimeout(() => {
     leadForm.hidden = true;
-    document.querySelector(".inline-lead .privacy-note").hidden = true;
     successMessage.hidden = false;
   }, 0);
 });

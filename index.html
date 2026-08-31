@@ -43,7 +43,7 @@
         <div class="trust-row" aria-label="Tool highlights">
           <span>Based on real campaign data</span>
           <span>Refreshed every quarter</span>
-          <span>Segmented by market, platform, and vertical</span>
+          <span>Segmented by market and vertical</span>
         </div>
       </section>
 
@@ -78,9 +78,8 @@
             </label>
 
             <label class="field field--conditional" id="monetization-field" hidden>
-              <span>Monetization model <b aria-hidden="true">*</b></span>
+              <span>Monetization model</span>
               <select id="monetization" name="monetization">
-                <option value="">Select a model</option>
               </select>
             </label>
           </div>
@@ -109,7 +108,7 @@
                 <span class="step-label">02 / YOUR BENCHMARK</span>
                 <h2 id="result-title">United States · Lifestyle</h2>
               </div>
-              <span class="confidence"><i></i> Strong signal</span>
+              <span class="confidence"><i></i> Available benchmark</span>
             </div>
 
             <div class="kpi-grid" id="kpi-grid"></div>
@@ -138,9 +137,17 @@
                     value=""
                   />
                 </div>
+                <label class="subscription-consent" for="subscription-consent">
+                  <input id="subscription-consent" type="checkbox" name="SUBSCRIPTION_CONSENT" value="yes" required />
+                  <span>
+                    I agree to receive the full report and follow-up sales and marketing communications from Mapendo.
+                    I have read the
+                    <a href="https://www.iubenda.com/privacy-policy/38690949" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+                    I can unsubscribe at any time.
+                  </span>
+                </label>
                 <button type="submit" name="subscribe">Get the full report <span aria-hidden="true">→</span></button>
               </form>
-              <p class="privacy-note">By submitting, you agree to be contacted by Mapendo about this request.</p>
               <div class="success-message" id="success-message" role="status" aria-live="polite" hidden>
                 <span>✓</span>
                 <div><b>Submitted to Mailchimp</b><small>Complete any confirmation step in the new tab or check your inbox.</small></div>
