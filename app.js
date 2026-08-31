@@ -91,12 +91,13 @@ form.addEventListener("submit", (event) => {
   if (window.innerWidth < 901) resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-leadForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+leadForm.addEventListener("submit", () => {
   if (!leadForm.reportValidity()) return;
-  leadForm.hidden = true;
-  document.querySelector(".inline-lead .privacy-note").hidden = true;
-  successMessage.hidden = false;
+  window.setTimeout(() => {
+    leadForm.hidden = true;
+    document.querySelector(".inline-lead .privacy-note").hidden = true;
+    successMessage.hidden = false;
+  }, 0);
 });
 
 loadData();
