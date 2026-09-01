@@ -9,7 +9,6 @@ const resultPanel = document.querySelector("#result-panel");
 const kpiGrid = document.querySelector("#kpi-grid");
 const leadForm = document.querySelector("#lead-form");
 const successMessage = document.querySelector("#success-message");
-const benchmarkCta = document.querySelector('.hero-cta[href^="#"]');
 
 let benchmarkData;
 let lastReportedHeight = 0;
@@ -37,23 +36,6 @@ function forwardWheelToParent(event) {
       type: "mapendo-benchmark-wheel",
       deltaY: event.deltaY,
       deltaMode: event.deltaMode
-    },
-    "*"
-  );
-}
-
-function requestParentScroll(event) {
-  if (window.parent === window) return;
-
-  const targetSelector = benchmarkCta?.getAttribute("href");
-  const target = targetSelector ? document.querySelector(targetSelector) : null;
-  if (!target) return;
-
-  event.preventDefault();
-  window.parent.postMessage(
-    {
-      type: "mapendo-benchmark-scroll",
-      offsetTop: Math.round(target.getBoundingClientRect().top + window.scrollY)
     },
     "*"
   );
@@ -210,7 +192,6 @@ leadForm.addEventListener("submit", () => {
 window.addEventListener("load", scheduleHeightReport);
 window.addEventListener("resize", scheduleHeightReport);
 window.addEventListener("wheel", forwardWheelToParent, { passive: true });
-benchmarkCta?.addEventListener("click", requestParentScroll);
 
 if ("ResizeObserver" in window) {
   const pageResizeObserver = new ResizeObserver(scheduleHeightReport);

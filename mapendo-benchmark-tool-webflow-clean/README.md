@@ -28,20 +28,27 @@ No build command or framework is required.
 Use a Webflow Code Embed with an iframe and listen for the tool's height message. The iframe reports its content height whenever the layout changes, so the embedded page ends immediately after its final section without a fixed-height gap.
 
 ```html
-<iframe id="mapendo-benchmark-frame" src="https://mingqi-mpd.github.io/benchmark-tool/?v=scroll-1" title="Mapendo Mobile UA Benchmark Calculator" loading="lazy" scrolling="no"></iframe>
-<style>#mapendo-benchmark-frame{display:block;width:100%;height:1px;border:0;overflow:hidden}</style>
+<iframe id="mapendo-benchmark-frame" src="https://mingqi-mpd.github.io/benchmark-tool/?v=scroll-2" title="Mapendo Mobile UA Benchmark Calculator" scrolling="no"></iframe>
+<style>
+  #mapendo-benchmark-frame{display:block;width:100%;height:1600px;border:0;overflow:hidden}
+  @media(max-width:900px){#mapendo-benchmark-frame{height:2200px}}
+</style>
 <script>
-  (() => {
-    const frame = document.getElementById("mapendo-benchmark-frame");
-    window.addEventListener("message", (event) => {
+  (function () {
+    var frame = document.getElementById("mapendo-benchmark-frame");
+    if (!frame) return;
+
+    window.addEventListener("message", function (event) {
       if (event.origin !== "https://mingqi-mpd.github.io" || event.source !== frame.contentWindow) return;
-      if (event.data?.type === "mapendo-benchmark-height") {
-        frame.style.height = `${Math.max(1, Math.ceil(event.data.height))}px`;
+
+      if (event.data && event.data.type === "mapendo-benchmark-height") {
+        frame.style.height = Math.max(1, Math.ceil(event.data.height)) + "px";
         return;
       }
 
-      if (event.data?.type === "mapendo-benchmark-scroll") {
-        const frameTop = window.scrollY + frame.getBoundingClientRect().top;
+      if (event.data && event.data.type === "mapendo-benchmark-scroll") {
+        var pageTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var frameTop = pageTop + frame.getBoundingClientRect().top;
         window.scrollTo({
           top: Math.max(0, frameTop + event.data.offsetTop - 24),
           behavior: "smooth"
@@ -49,8 +56,8 @@ Use a Webflow Code Embed with an iframe and listen for the tool's height message
         return;
       }
 
-      if (event.data?.type === "mapendo-benchmark-wheel") {
-        const multiplier = event.data.deltaMode === 1
+      if (event.data && event.data.type === "mapendo-benchmark-wheel") {
+        var multiplier = event.data.deltaMode === 1
           ? 16
           : event.data.deltaMode === 2
             ? window.innerHeight
