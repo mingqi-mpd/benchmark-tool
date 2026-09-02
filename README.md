@@ -23,6 +23,52 @@ Then open `http://localhost:8080`.
 
 No build command or framework is required.
 
+## Embed in Webflow
+
+Use a Webflow Code Embed with an iframe and listen for the tool's height message. The iframe reports its content height whenever the layout changes, so the embedded page ends immediately after its final section without a fixed-height gap.
+
+```html
+<iframe id="mapendo-benchmark-frame" src="https://mingqi-mpd.github.io/benchmark-tool/?v=scroll-2" title="Mapendo Mobile UA Benchmark Calculator" scrolling="no"></iframe>
+<style>
+  #mapendo-benchmark-frame{display:block;width:100%;height:1600px;border:0;overflow:hidden}
+  @media(max-width:900px){#mapendo-benchmark-frame{height:2200px}}
+</style>
+<script>
+  (function () {
+    var frame = document.getElementById("mapendo-benchmark-frame");
+    if (!frame) return;
+
+    window.addEventListener("message", function (event) {
+      if (event.origin !== "https://mingqi-mpd.github.io" || event.source !== frame.contentWindow) return;
+
+      if (event.data && event.data.type === "mapendo-benchmark-height") {
+        frame.style.height = Math.max(1, Math.ceil(event.data.height)) + "px";
+        return;
+      }
+
+      if (event.data && event.data.type === "mapendo-benchmark-scroll") {
+        var pageTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var frameTop = pageTop + frame.getBoundingClientRect().top;
+        window.scrollTo({
+          top: Math.max(0, frameTop + event.data.offsetTop - 24),
+          behavior: "smooth"
+        });
+        return;
+      }
+
+      if (event.data && event.data.type === "mapendo-benchmark-wheel") {
+        var multiplier = event.data.deltaMode === 1
+          ? 16
+          : event.data.deltaMode === 2
+            ? window.innerHeight
+            : 1;
+        window.scrollBy(0, event.data.deltaY * multiplier);
+      }
+    });
+  })();
+</script>
+```
+
 ## Lead form
 
 The full-report form is connected to Mapendo's Mailchimp Audience. It requires a work email and explicit consent to receive the report and follow-up sales and marketing communications.

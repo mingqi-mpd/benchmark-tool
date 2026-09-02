@@ -11,6 +11,35 @@ const leadForm = document.querySelector("#lead-form");
 const successMessage = document.querySelector("#success-message");
 
 let benchmarkData;
+let lastReportedHeight = 0;
+
+function reportPageHeight() {
+  if (window.parent === window) return;
+
+  const height = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
+  if (height === lastReportedHeight) return;
+
+  lastReportedHeight = height;
+  window.parent.postMessage({ type: "mapendo-benchmark-height", height }, "*");
+}
+
+function scheduleHeightReport() {
+  requestAnimationFrame(() => requestAnimationFrame(reportPageHeight));
+}
+
+function forwardWheelToParent(event) {
+  const isOverSelect = event.target instanceof Element && event.target.closest("select");
+  if (window.parent === window || event.deltaY === 0 || isOverSelect) return;
+
+  window.parent.postMessage(
+    {
+      type: "mapendo-benchmark-wheel",
+      deltaY: event.deltaY,
+      deltaMode: event.deltaMode
+    },
+    "*"
+  );
+}
 
 async function loadData() {
   try {
@@ -95,6 +124,7 @@ function updateMonetizationField() {
 function resetResult() {
   resultContent.hidden = true;
   resultEmpty.hidden = false;
+  scheduleHeightReport();
 }
 
 function renderBenchmark(countryKey, verticalKey) {
@@ -130,6 +160,7 @@ function renderBenchmark(countryKey, verticalKey) {
   resultContent.hidden = false;
   resultContent.style.animation = "none";
   requestAnimationFrame(() => { resultContent.style.animation = ""; });
+  scheduleHeightReport();
 }
 
 countrySelect.addEventListener("change", () => {
@@ -154,7 +185,17 @@ leadForm.addEventListener("submit", () => {
   window.setTimeout(() => {
     leadForm.hidden = true;
     successMessage.hidden = false;
+    scheduleHeightReport();
   }, 0);
 });
+
+window.addEventListener("load", scheduleHeightReport);
+window.addEventListener("resize", scheduleHeightReport);
+window.addEventListener("wheel", forwardWheelToParent, { passive: true });
+
+if ("ResizeObserver" in window) {
+  const pageResizeObserver = new ResizeObserver(scheduleHeightReport);
+  pageResizeObserver.observe(document.body);
+}
 
 loadData();
