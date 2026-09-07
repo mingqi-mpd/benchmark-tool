@@ -56,6 +56,20 @@ Use a Webflow Code Embed with an iframe and listen for the tool's height message
         return;
       }
 
+      if (event.data && event.data.type === "mapendo-ga4-event") {
+        if (event.data.eventName !== "get_benchmarks") return;
+
+        if (typeof window.gtag === "function") {
+          window.gtag("event", event.data.eventName, event.data.eventParameters || {});
+        } else if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({
+            event: event.data.eventName,
+            ...(event.data.eventParameters || {})
+          });
+        }
+        return;
+      }
+
       if (event.data && event.data.type === "mapendo-benchmark-wheel") {
         var multiplier = event.data.deltaMode === 1
           ? 16

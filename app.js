@@ -27,6 +27,33 @@ function scheduleHeightReport() {
   requestAnimationFrame(() => requestAnimationFrame(reportPageHeight));
 }
 
+function trackBenchmarkRequest(countryKey, verticalKey) {
+  const vertical = benchmarkData.verticals[verticalKey];
+  const eventParameters = {
+    target_market: benchmarkData.countries[countryKey].label,
+    vertical: vertical.label,
+    monetization_model: vertical.model
+      ? benchmarkData.monetizationModels[vertical.model].label
+      : "not_applicable"
+  };
+
+  if (window.parent !== window) {
+    window.parent.postMessage(
+      {
+        type: "mapendo-ga4-event",
+        eventName: "get_benchmarks",
+        eventParameters
+      },
+      "*"
+    );
+    return;
+  }
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "get_benchmarks", eventParameters);
+  }
+}
+
 function forwardWheelToParent(event) {
   const isOverSelect = event.target instanceof Element && event.target.closest("select");
   if (window.parent === window || event.deltaY === 0 || isOverSelect) return;
@@ -177,6 +204,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!form.reportValidity() || !benchmarkData) return;
   renderBenchmark(countrySelect.value, verticalSelect.value);
+  trackBenchmarkRequest(countrySelect.value, verticalSelect.value);
   if (window.innerWidth < 901) resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
