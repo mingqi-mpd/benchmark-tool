@@ -9,7 +9,7 @@
     />
     <title>UA Benchmark Tool | Mapendo</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="app.js?v=20260907-1" defer></script>
+    <script src="app.js?v=20260907-2" defer></script>
   </head>
   <body>
     <div class="page-glow page-glow--one" aria-hidden="true"></div>
@@ -18,7 +18,7 @@
       <section class="hero" aria-labelledby="page-title">
         <div class="hero-copy">
           <div class="eyebrow">MOBILE UA BENCHMARK CALCULATOR</div>
-          <h1 id="page-title">See what performance could look like <em>with Mapendo.</em></h1>
+          <h1 id="page-title">See your mobile UA potential <em>with Mapendo.</em></h1>
           <p>
             Get a fast, directional view of acquisition costs, scale potential, and estimated ROAS for
             your next mobile user acquisition campaign.
@@ -114,7 +114,7 @@
                 id="lead-form"
                 action="https://mapendo.us20.list-manage.com/subscribe/post?u=012a30aeb07d659c785fad515&amp;id=6312998ace&amp;f_id=00a176eef0"
                 method="post"
-                target="_blank"
+                target="mailchimp-submit-frame"
               >
                 <label class="sr-only" for="lead-email">Work email</label>
                 <input id="lead-email" type="email" name="EMAIL" placeholder="Enter your work email" autocomplete="email" required />
@@ -137,6 +137,12 @@
                 </label>
                 <button type="submit" name="subscribe">Request a customer benchmark <span aria-hidden="true">→</span></button>
               </form>
+              <iframe
+                id="mailchimp-submit-frame"
+                name="mailchimp-submit-frame"
+                title="Mailchimp submission"
+                hidden
+              ></iframe>
               <div class="success-message" id="success-message" role="status" aria-live="polite" hidden>
                 <span>✓</span>
                 <div><b>Submitted to Mailchimp</b><small>Complete any confirmation step in the new tab or check your inbox.</small></div>

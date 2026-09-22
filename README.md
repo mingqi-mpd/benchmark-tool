@@ -87,6 +87,12 @@ Use a Webflow Code Embed with an iframe and listen for the tool's height message
 
 The full-report form is connected to Mapendo's Mailchimp Audience. It requires a work email and explicit consent to receive the report and follow-up sales and marketing communications.
 
+The form submits to a hidden iframe so Mailchimp can process the subscription without showing its hosted signup/response page. After Mailchimp responds, the calculator redirects the top-level page to:
+
+`https://growyourapp.mapendo.co/thank-you-for-subscribing`
+
+The calculator also posts a `mapendo-subscription-redirect` message to the Webflow parent as a fallback. If top-level iframe navigation is restricted by the browser, handle that message in Webflow and set `window.location.href` to the supplied URL.
+
 ## Edit benchmark data
 
 All benchmark inputs live in `benchmarks.json`. Country and vertical options filter each other so unavailable combinations are never offered. Game verticals automatically display their fixed IAA or IAP monetization model, and results show only the metrics available for the selected combination.

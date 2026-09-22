@@ -8,10 +8,14 @@ const resultContent = document.querySelector("#result-content");
 const resultPanel = document.querySelector("#result-panel");
 const kpiGrid = document.querySelector("#kpi-grid");
 const leadForm = document.querySelector("#lead-form");
+const mailchimpSubmitFrame = document.querySelector("#mailchimp-submit-frame");
 const successMessage = document.querySelector("#success-message");
 
 let benchmarkData;
 let lastReportedHeight = 0;
+let mailchimpSubmissionStarted = false;
+
+const subscriptionThankYouUrl = "https://growyourapp.mapendo.co/thank-you-for-subscribing";
 
 function reportPageHeight() {
   if (window.parent === window) return;
@@ -210,10 +214,29 @@ form.addEventListener("submit", (event) => {
 
 leadForm.addEventListener("submit", () => {
   if (!leadForm.reportValidity()) return;
+  mailchimpSubmissionStarted = true;
+  const submitButton = leadForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.setAttribute("aria-busy", "true");
+});
+
+mailchimpSubmitFrame.addEventListener("load", () => {
+  if (!mailchimpSubmissionStarted) return;
+
+  window.parent.postMessage(
+    {
+      type: "mapendo-subscription-redirect",
+      url: subscriptionThankYouUrl
+    },
+    "*"
+  );
+
   window.setTimeout(() => {
-    leadForm.hidden = true;
-    successMessage.hidden = false;
-    scheduleHeightReport();
+    try {
+      window.top.location.href = subscriptionThankYouUrl;
+    } catch (error) {
+      window.location.href = subscriptionThankYouUrl;
+    }
   }, 0);
 });
 
